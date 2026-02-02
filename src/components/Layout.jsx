@@ -10,7 +10,7 @@ function Layout() {
       {/* Mobile Header */}
       <MobileHeader />
 
-      <div className="flex justify-center max-w-7xl mx-auto lg:mr-80">
+      <div className="flex justify-center max-w-7xl mx-auto">
         {/* Left Sidebar - hidden on mobile */}
         <div className="hidden md:block">
           <Sidebar />
@@ -20,10 +20,10 @@ function Layout() {
         <main className="flex-1 max-w-xl border-x border-gray-800 min-h-screen pb-16 md:pb-0">
           <Outlet />
         </main>
-      </div>
 
-      {/* Right Sidebar - fixed, hidden on mobile and tablet */}
-      <TrendingSidebar />
+        {/* Right Sidebar - hidden on mobile and tablet */}
+        <TrendingSidebar />
+      </div>
 
       {/* Mobile Bottom Navigation */}
       <MobileNav />
