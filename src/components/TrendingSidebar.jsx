@@ -32,7 +32,7 @@ function TrendingSidebar() {
   }, [])
 
   return (
-    <aside className="w-80 h-screen sticky top-0 hidden lg:block p-4 overflow-hidden">
+    <aside className="w-80 h-screen sticky top-0 hidden lg:block p-4 pb-8 overflow-hidden">
       {/* Search Box */}
       <div className="mb-4">
         <div className="relative">
@@ -68,7 +68,7 @@ function TrendingSidebar() {
       </div>
 
       {/* Trending Section */}
-      <div className="bg-gray-900 rounded-xl overflow-hidden">
+      <div className="bg-gray-900 rounded-xl overflow-hidden mb-4">
         <h2 className="text-xl font-bold p-4">Trending Topics</h2>
 
         {loading ? (
@@ -102,14 +102,14 @@ function TrendingSidebar() {
           href="https://en.wikipedia.org/wiki/Portal:Current_events"
           target="_blank"
           rel="noopener noreferrer"
-          className="block p-4 text-blue-400 hover:bg-gray-800 transition-colors"
+          className="block p-4 text-blue-400 hover:bg-gray-800 transition-colors border-t border-gray-800"
         >
           Show more
         </a>
       </div>
 
       {/* Footer Links */}
-      <div className="mt-4 p-4 text-xs text-gray-500">
+      <div className="p-4 text-xs text-gray-500">
         <div className="flex flex-wrap gap-2">
           <a
             href="https://en.wikipedia.org/wiki/Wikipedia:About"
