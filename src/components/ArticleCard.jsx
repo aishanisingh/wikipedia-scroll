@@ -9,8 +9,20 @@ function ArticleCard({ article }) {
   const wikipediaUrl = content_urls?.desktop?.page || getWikipediaUrl(title)
   const formattedExtract = formatExtract(extract, 280)
 
+  const handleCardClick = () => {
+    window.open(wikipediaUrl, '_blank')
+  }
+
+  const handleActionClick = (e, action) => {
+    e.stopPropagation()
+    action()
+  }
+
   return (
-    <article className="border-b border-gray-800 p-4 hover:bg-gray-900/50 transition-colors">
+    <article
+      onClick={handleCardClick}
+      className="border-b border-gray-800 p-4 hover:bg-gray-900/50 transition-colors cursor-pointer"
+    >
       <div className="flex gap-3">
         {/* Wikipedia "Avatar" */}
         <div className="flex-shrink-0">
@@ -68,29 +80,10 @@ function ArticleCard({ article }) {
 
           {/* Actions */}
           <div className="flex items-center gap-4 mt-3">
-            <a
-              href={wikipediaUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-gray-500 hover:text-blue-400 transition-colors group"
+            <button
+              onClick={(e) => handleActionClick(e, () => navigator.share?.({ title, url: wikipediaUrl }) || navigator.clipboard.writeText(wikipediaUrl))}
+              className="flex items-center gap-2 text-gray-500 hover:text-green-400 transition-colors"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                />
-              </svg>
-              <span className="text-sm group-hover:underline">Read more</span>
-            </a>
-
-            <button className="flex items-center gap-2 text-gray-500 hover:text-green-400 transition-colors">
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -108,7 +101,7 @@ function ArticleCard({ article }) {
             </button>
 
             <button
-              onClick={() => toggleLike(article)}
+              onClick={(e) => handleActionClick(e, () => toggleLike(article))}
               className={`flex items-center gap-2 transition-colors ${
                 liked ? 'text-red-500' : 'text-gray-500 hover:text-red-400'
               }`}
