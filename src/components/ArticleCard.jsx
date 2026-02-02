@@ -1,7 +1,10 @@
 import { getWikipediaUrl, formatExtract } from '../utils/wikipedia'
+import { usePreferences } from '../hooks/usePreferences'
 
 function ArticleCard({ article }) {
   const { title, extract, thumbnail, topic, isDiscovery, content_urls } = article
+  const { toggleLike, isArticleLiked } = usePreferences()
+  const liked = isArticleLiked(title)
 
   const wikipediaUrl = content_urls?.desktop?.page || getWikipediaUrl(title)
   const formattedExtract = formatExtract(extract, 280)
@@ -104,10 +107,15 @@ function ArticleCard({ article }) {
               <span className="text-sm">Share</span>
             </button>
 
-            <button className="flex items-center gap-2 text-gray-500 hover:text-red-400 transition-colors">
+            <button
+              onClick={() => toggleLike(article)}
+              className={`flex items-center gap-2 transition-colors ${
+                liked ? 'text-red-500' : 'text-gray-500 hover:text-red-400'
+              }`}
+            >
               <svg
                 className="w-5 h-5"
-                fill="none"
+                fill={liked ? 'currentColor' : 'none'}
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -118,7 +126,7 @@ function ArticleCard({ article }) {
                   d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                 />
               </svg>
-              <span className="text-sm">Like</span>
+              <span className="text-sm">{liked ? 'Liked' : 'Like'}</span>
             </button>
           </div>
         </div>

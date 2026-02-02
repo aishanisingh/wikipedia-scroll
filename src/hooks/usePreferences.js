@@ -6,6 +6,7 @@ const STORAGE_KEY = 'wikiscroll-preferences'
 const DEFAULT_PREFERENCES = {
   selectedTopics: AVAILABLE_TOPICS.slice(0, 3), // Default to first 3 topics
   customTopics: {}, // { 'Topic Name': ['keyword1', 'keyword2', ...] }
+  likedArticles: [], // Array of liked article objects
 }
 
 export function usePreferences() {
@@ -19,6 +20,7 @@ export function usePreferences() {
           ...DEFAULT_PREFERENCES,
           ...parsed,
           customTopics: parsed.customTopics || {},
+          likedArticles: parsed.likedArticles || [],
         }
       }
     } catch (error) {
@@ -87,13 +89,46 @@ export function usePreferences() {
     })
   }
 
+  const toggleLike = (article) => {
+    setPreferences(prev => {
+      const isLiked = prev.likedArticles.some(a => a.title === article.title)
+      if (isLiked) {
+        return {
+          ...prev,
+          likedArticles: prev.likedArticles.filter(a => a.title !== article.title),
+        }
+      } else {
+        // Store essential article data
+        const articleToSave = {
+          title: article.title,
+          extract: article.extract,
+          thumbnail: article.thumbnail,
+          topic: article.topic,
+          content_urls: article.content_urls,
+          likedAt: Date.now(),
+        }
+        return {
+          ...prev,
+          likedArticles: [articleToSave, ...prev.likedArticles],
+        }
+      }
+    })
+  }
+
+  const isArticleLiked = (title) => {
+    return preferences.likedArticles.some(a => a.title === title)
+  }
+
   return {
     selectedTopics: preferences.selectedTopics,
     customTopics: preferences.customTopics,
+    likedArticles: preferences.likedArticles,
     toggleTopic,
     setSelectedTopics,
     addCustomTopic,
     removeCustomTopic,
     updateCustomTopic,
+    toggleLike,
+    isArticleLiked,
   }
 }
