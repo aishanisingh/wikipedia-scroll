@@ -32,7 +32,7 @@ function TrendingSidebar() {
   }, [])
 
   return (
-    <aside className="w-80 h-screen sticky top-0 hidden lg:block p-4 overflow-y-auto">
+    <aside className="w-80 h-screen sticky top-0 hidden lg:block p-4 overflow-hidden">
       {/* Search Box */}
       <div className="mb-4">
         <div className="relative">
