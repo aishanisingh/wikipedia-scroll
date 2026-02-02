@@ -18,9 +18,9 @@ function TrendingSidebar() {
           allResults.push(...results)
         }
 
-        // Shuffle and take first 5
+        // Shuffle and take first 3
         const shuffled = allResults.sort(() => Math.random() - 0.5)
-        setTrending(shuffled.slice(0, 5))
+        setTrending(shuffled.slice(0, 3))
       } catch (error) {
         console.error('Error fetching trending:', error)
       } finally {
@@ -81,18 +81,10 @@ function TrendingSidebar() {
                 href={getWikipediaUrl(item.title)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block p-4 hover:bg-gray-800 transition-colors border-t border-gray-800"
+                className="block p-3 hover:bg-gray-800 transition-colors border-t border-gray-800"
               >
                 <p className="text-xs text-gray-500">Trending</p>
-                <p className="font-bold text-white">{item.title}</p>
-                {item.snippet && (
-                  <p
-                    className="text-sm text-gray-400 mt-1 line-clamp-2"
-                    dangerouslySetInnerHTML={{
-                      __html: item.snippet.substring(0, 100) + '...',
-                    }}
-                  />
-                )}
+                <p className="font-bold text-white text-sm">{item.title}</p>
               </a>
             ))}
           </div>
